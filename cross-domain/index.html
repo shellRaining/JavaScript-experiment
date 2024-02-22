@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <title>页面</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <h1>你好</h1>
+    <script>
+      fetch("/info.json")
+        .then((res) => res.text())
+        .then(console.log);
+      fetch("http://localhost:5378")
+        .then((res) => res.text())
+        .then(console.log);
+    </script>
+  </body>
+</html>
