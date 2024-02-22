@@ -7,13 +7,22 @@
   </head>
   <body>
     <h1>你好</h1>
+    <!-- 1. CORS -->
+    <!-- <script> -->
+    <!--   fetch("/info.json") -->
+    <!--     .then((res) => res.text()) -->
+    <!--     .then(console.log); -->
+    <!--   fetch("http://localhost:5378") -->
+    <!--     .then((res) => res.text()) -->
+    <!--     .then(console.log); -->
+    <!-- </script> -->
+
+    <!-- 2. JSONP -->
     <script>
-      fetch("/info.json")
-        .then((res) => res.text())
-        .then(console.log);
-      fetch("http://localhost:5378")
-        .then((res) => res.text())
-        .then(console.log);
+      function f(info) {
+        console.log(info);
+      }
     </script>
+    <script src="http://localhost:5378?callback=f"></script>
   </body>
 </html>
