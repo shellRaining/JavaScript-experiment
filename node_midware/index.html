@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <title>node middleware</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div>请打开控制台</div>
+    <button onclick="sendReq()">点击请求</button>
+    <script>
+      function sendReq() {
+        console.log("发送请求")
+        fetch("/api/request")
+          .then((res) => res.text())
+          .then((res) => {
+            console.log("请求成功，结果是：", res);
+          });
+      }
+    </script>
+  </body>
+</html>
