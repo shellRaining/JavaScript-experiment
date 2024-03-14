@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "promises-aplus-tests": "^2.1.2"
+  },
+  "scripts": {
+    "test": "promises-aplus-tests ./promise/review.js",
+    "test-right": "promises-aplus-tests ./promise/right.js"
+  }
+}

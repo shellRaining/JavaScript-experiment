@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <title>websocket</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <button onclick="send()">click and watch console</button>
+    <script>
+      function send() {
+        let socket = new WebSocket("ws://localhost:5377");
+        socket.onopen = function () {
+          socket.send("向服务端发送数据");
+        };
+        socket.onmessage = function (e) {
+          console.log(e.data); // 服务端传给你的数据
+        };
+      }
+    </script>
+  </body>
+</html>
