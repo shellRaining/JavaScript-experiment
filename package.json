@@ -1,12 +1,17 @@
 {
   "dependencies": {
-    "request": "^2.88.2"
+    "axios": "^1.6.7",
+    "express": "^4.18.3",
+    "multiparty": "^4.2.3",
+    "node-static": "^0.7.11",
+    "request": "^2.88.2",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "promises-aplus-tests": "^2.1.2"
   },
   "scripts": {
-    "test": "promises-aplus-tests ./promise/review.js",
-    "test-right": "promises-aplus-tests ./promise/right.js"
+    "promise-test": "promises-aplus-tests ./promise/review.js",
+    "large-file-upload-server": "node ./large_file_upload/app.js"
   }
 }
