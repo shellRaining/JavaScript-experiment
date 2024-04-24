@@ -27,7 +27,7 @@
 async function sleep(time) {
   return new Promise((resolve) => {
     setTimeout(() => {
-      console.log('sleep', time);
+      console.log("sleep", time);
       resolve(time);
     }, time);
   });
@@ -38,38 +38,66 @@ const tasks = [
   () => sleep(2000),
   () => sleep(1500),
   () => sleep(1000),
-  () => sleep(500)
-]
+  () => sleep(500),
+];
 
-function createRequest(tasks, limit = 6) {
+// function createRequest(tasks, limit = 6) {
+//   return new Promise((resolve, reject) => {
+//     let cnt = 0
+//     let idx = 0
+//     const len = tasks.length
+//     const res = new Array(len)
+//
+//     function step(i) {
+//       if (i < len) {
+//         Promise.resolve(tasks[i]()).then((value) => {
+//           res[i] = value
+//           cnt++
+//           if (cnt === len) {
+//             resolve(res)
+//           }
+//           step(idx)
+//         }, (reason) => {
+//           reject(reason)
+//         })
+//       }
+//       idx++
+//     }
+//
+//     for (let i = 0; i < limit; i++) {
+//       step(i)
+//     }
+//   })
+// }
+
+function createRequest(tasks, limit) {
   return new Promise((resolve, reject) => {
-    let cnt = 0
-    let idx = 0
-    const len = tasks.length
-    const res = new Array(len)
+    let cnt = 0;
+    let idx = 0;
+    const len = tasks.length;
+    const res = [];
 
-    function step(i) {
-      if (i < len) {
-        Promise.resolve(tasks[i]()).then((value) => {
-          res[i] = value
-          cnt++
-          if (cnt === len) {
-            resolve(res)
-          }
-          step(idx)
-        }, (reason) => {
-          reject(reason)
-        })
-      }
-      idx++
+    function next(i) {
+      if (idx == len) return;
+      console.log('exec', i);
+      
+      Promise.resolve(tasks[i]()).then((value) => {
+        res.push(value);
+        cnt++;
+        if (cnt === len) {
+          resolve(res);
+        }
+        next(idx);
+      });
+      idx++;
     }
 
     for (let i = 0; i < limit; i++) {
-      step(i)
+      next(i);
     }
-  })
+  });
 }
 
 createRequest(tasks, 3).then((value) => {
   console.log(value);
-})
+});
