@@ -12,6 +12,7 @@
   },
   "scripts": {
     "promise-test": "promises-aplus-tests ./promise/review.js",
+    "promise-mock": "promises-aplus-tests ./promise/mock.js",
     "large-file-upload-server": "node ./large_file_upload/app.js"
   }
 }

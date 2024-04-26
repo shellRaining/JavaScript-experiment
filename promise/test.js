@@ -1,29 +1,14 @@
-const Promise = require("./review");
+const Promise = require("./mock");
 
-console.log(1);
+// 创建一个直接被拒绝的Promise
+let p1 = Promise.reject('error');
 
-setTimeout(() => {
-  console.log(2);
-}, 0);
-
-let promise = new Promise((resolve) => {
-  console.log(3);
-  resolve();
-})
-  .then(() => {
-    console.log(4);
-  })
-  .then(() => {
-    console.log(5);
-  });
-
-new Promise((resolve) => {
-  console.log(7);
-  resolve()
-}).then(() => {
-  console.log(8);
+// 直接在p1上应用.then方法
+p1.then(null, (reason) => {
+  console.log(reason); // 正确处理并打印错误
 });
 
-console.log(6);
+// 创建另一个Promise，通过链式调用来处理p1
+let p2 = p1.then(undefined);
 
-// 1 3 7 6 4 8 5 2
+// p2的处理没有通过测试，表示在链式调用中未正确忽略非函数的onFulfilled
