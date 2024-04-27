@@ -32,24 +32,23 @@ function Promise(fn) {
 }
 
 function resolvePromise(promise, x, resolve, reject) {
-  // type check, after check, promise !== x and x is a object (or function)
-  if (promise === x)
-    return reject(new TypeError("resolvePromise get same promise and x"));
+  if (promise === x) return reject(new TypeError("promise equal with res"));
   if (x === null) return resolve(null);
   else if (typeof x !== "function" && typeof x !== "object") return resolve(x);
   else if (x instanceof Promise) {
-    return x.then(function (y) {
-      resolvePromise(promise, y, resolve, reject);
-    }, reject);
+    return x.then(
+      (value) => resolvePromise(promise, value, resolve, reject),
+      reject,
+    );
   }
 
+  let then;
   try {
-    var then = x.then;
+    then = x.then;
     if (typeof then !== "function") return resolve(x);
-  } catch (error) {
-    return reject(error);
+  } catch (e) {
+    reject(e);
   }
-
   var called = false;
   // 将 x 作为函数的作用域 this 调用之
   // 传递两个回调函数作为参数，第一个参数叫做 resolvePromise ，第二个参数叫做 rejectPromise
@@ -86,11 +85,11 @@ function resolvePromise(promise, x, resolve, reject) {
 Promise.prototype.then = function (onFulfilled, onRejected) {
   const fulfilledTask = (resolve, reject) => {
     try {
-      if (typeof onFulfilled !== "function") {
-        resolve(this.value);
-      } else {
+      if (typeof onFulfilled === "function") {
         const res = onFulfilled(this.value);
         resolvePromise(resPromise, res, resolve, reject);
+      } else {
+        resolve(this.value);
       }
     } catch (e) {
       reject(e);
@@ -98,11 +97,11 @@ Promise.prototype.then = function (onFulfilled, onRejected) {
   };
   const rejectedTask = (resolve, reject) => {
     try {
-      if (typeof onRejected !== "function") {
-        reject(this.reason);
-      } else {
+      if (typeof onRejected === "function") {
         const res = onRejected(this.reason);
         resolvePromise(resPromise, res, resolve, reject);
+      } else {
+        reject(this.reason);
       }
     } catch (e) {
       reject(e);
